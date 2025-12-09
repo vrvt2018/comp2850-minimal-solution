@@ -17,27 +17,29 @@
 - **Linked to**: Week 6 Job Story #4 ("quickly add task (using keybord navigation)")
 
 
-
-## Task 3: 
+## Task 3: Filter tasks
 - **Scenario**: 
 - **Action**: 
 - **Success**: 
 - **Target**: 
 - **Linked to**:
 
-## Task 4: 
+
+## Task 4: Delete task named "Walk the dog"
+- **Scenario**: Has just walked the dog, wants to remove it from the list of tasks by searching for and removing it.
+- **Action**: Search "Walk the dog" and click remove.
+- **Success**: 
+- **Target**: <
+- **Linked to**:
+
+
+## Task 5: Remove task
 - **Scenario**: 
 - **Action**: 
 - **Success**: 
 - **Target**: 
 - **Linked to**:
 
-## Task 5: 
-- **Scenario**: 
-- **Action**: 
-- **Success**: 
-- **Target**: 
-- **Linked to**:
 
 ## Consent script
 Thank you for participating in my HCI evaluation. This will take about 15 minutes. I’m testing my task management interface, not you. There are no right or wrong answers.
