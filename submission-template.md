@@ -51,7 +51,7 @@
 -   **Scenario**: Have just walked the dog, want to remove it by searching for and removing it.
 -   **Action**: Filter task "walk the dog", click remove
 -   **Success**: Task "walk the dog" removed without error
--   **Target time**: <8 seconds
+-   **Target time**: <10 seconds
 -   **Linked to**: Job story #3 ("Remove task")
 
 #### [Task 4 (T4): \[Read through tasks\]]
@@ -74,9 +74,12 @@
 - [ ] "I may take screenshots and notes. I'll remove any identifying information."
 - [ ] "Do you consent to participate?" [Wait for verbal yes]
 
-**Recorded consent timestamp**: [e.g., "P1 consented 22/11/2025 14:05"]
+**Recorded consent timestamp**:
 
----
+P1 consented 09/12/2025 15:40
+P2 consented 09/12/2025 16:45
+
+---     
 
 ## 2. Findings Table
 
@@ -84,18 +87,17 @@
 
 | Finding | Data Source | Observation (Quote/Timestamp) | WCAG | Impact (1-5) | Inclusion (1-5) | Effort (1-5) | Priority |
 |---------|-------------|------------------------------|------|--------------|-----------------|--------------|----------|
-| SR errors not announced | metrics.csv L47-49 + P2 notes 14:23 | P2: "I didn't hear any error" | 3.3.1 Level A | 5 | 5 | 3 | 7 |
-| SR does not help count tasks | P2 notes | [Participant quote + timestamp] | [WCAG criterion] | 3 | 4 | 5 | 2 |
-| [Your finding 3] | | | | | | | |
-| [Your finding 4] | | | | | | | |
-| [Your finding 5] | | | | | | | |
+| Keyboard navigation confusing | metrics.csv + P2 notes| P2: "It's hard to tell which button I'm selecting" | WCAG 2.4.7 | 2 | 3 | 2 | 4 |
+| No confirmation when adding task | P2 notes | (Opon being asked if they saw confirmation) P1: "No, I did not see any confirmation" | WCAG 3.2.2 | 2 | 3 | 1 | 5 |
+| No explicit confirmation when removing task | P2 notes | P2: "I saw that it was removed, but nothing else." | WCAG 3.2.2 | 2 | 3 | 1 | 5 |
+| P2 exceeded expected times significantly | P2 notes, metrics.csv | Task 2 - expected <10 seconds, took 18, Task 3 - expected <10 seconds, took 18 | WCAG 3.2.2 | 2 | 3 | 1 | 5 |
 
 **Priority formula**: (Impact + Inclusion) - Effort
 
 **Top 3 priorities for redesign**:
-1. [Finding #X - Priority score Y]
-2. [Finding #X - Priority score Y]
-3. [Finding #X - Priority score Y]
+1. [Finding #3 - Priority score 5]
+2. [Finding #2 - Priority score 5]
+3. [Finding #1 - Priority score 4]
 
 ---
 
@@ -106,16 +108,40 @@
 ```csv
 ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 2025-11-22T14:18:23.456Z,P1_a7f3,req_001,T1_add,success,,890,200,on
-[Your metrics data here - all rows from Logger.kt output]
+2025-12-09T16:29:36.347797200Z,P1_7a9f,r_6544e5a1,T0_list,success,,23,200,off
+2025-12-09T16:30:47.915748300Z,P1_7a9f,r_8404cea5,T4_delete,success,,7,200,on
+2025-12-09T16:31:56.142822Z,P1_7a9f,r_72bbdc46,T3_add,success,,16,200,on
+2025-12-09T16:33:54.448655800Z,P1_7a9f,r_ee440a3d,T2_edit,success,,7,200,on
+2025-12-09T16:36:21.891572700Z,P1_7a9f,r_6d75c48c,T1_filter,success,,8,200,on
+2025-12-09T16:36:23.413635700Z,P1_7a9f,r_6c7ee288,T1_filter,success,,9,200,on
+2025-12-09T16:36:28.815723600Z,P1_7a9f,r_43ec1b47,T4_delete,success,,6,200,on
+2025-12-09T16:37:40.974823500Z,P1_7a9f,r_fb14e612,T1_filter,success,,12,200,on
+2025-12-09T16:38:00.518269200Z,P1_7a9f,r_8b57ccf5,T1_filter,success,,9,200,on
+2025-12-09T16:40:19.451657Z,P1_7a9f,r_d70330b5,T1_filter,success,,1,200,off
+2025-12-09T16:40:19.499657900Z,P1_7a9f,r_f32cf804,T0_list,success,,32,200,off
+2025-12-09T16:40:32.700872400Z,P1_7a9f,r_1cbd157d,T3_add,success,,15,200,on
+2025-12-09T16:41:31.169836100Z,P1_4a5f,r_1f81860e,T4_delete,success,,5,200,on
+2025-12-09T16:43:08.422520600Z,P2_4a5f,r_593bbfa3,T0_list,success,,20,200,off
+2025-12-09T16:45:33.604086200Z,P2_4a5f,r_a36e170e,T0_list,success,,18,200,off
+2025-12-09T16:45:45.470386500Z,P2_4a5f,r_8ddb0672,T3_add,success,,11,200,on
+2025-12-09T16:47:10.848440800Z,P2_4a5f,r_77aa08c0,T2_edit,success,,7,200,on
+2025-12-09T16:48:13.019553100Z,P2_4a5f,r_9076bc5d,T1_filter,success,,6,200,on
+2025-12-09T16:48:14.092033800Z,P2_4a5f,r_e5887307,T1_filter,success,,7,200,on
+2025-12-09T16:48:14.853841200Z,P2_4a5f,r_f3a1fa0e,T1_filter,success,,6,200,on
+2025-12-09T16:48:18.720752800Z,P2_4a5f,r_4a037383,T1_filter,success,,4,200,on
+2025-12-09T16:48:21.677582700Z,P2_4a5f,r_bb501db3,T1_filter,success,,6,200,on
+2025-12-09T16:48:22.599939600Z,P2_4a5f,r_c662c9d2,T1_filter,success,,5,200,on
+2025-12-09T16:48:25.443582600Z,P2_4a5f,r_3361975e,T1_filter,success,,8,200,on
+2025-12-09T16:48:25.639535700Z,P2_4a5f,r_2820f4c8,T1_filter,success,,6,200,on
+2025-12-09T16:48:28.538253700Z,P2_4a5f,r_1bcd2b64,T4_delete,success,,5,200,on
+2025-12-09T16:49:08.804420200Z,P2_4a5f,r_4ecdab33,T1_filter,success,,11,200,on
 ```
 
 **Participant summary**:
-- **P1**: [Variant - e.g., "Standard mouse + HTMX"]
-- **P2**: [Variant - e.g., "Keyboard-only, HTMX-on"]
-- **P3** (if applicable): [Variant]
-- **P4** (if applicable): [Variant]
+- **P1**: [Variant - "Standard mouse + HTMX"]
+- **P2**: [Variant - "Keyboard-only + HTMX"]
 
-**Total participants**: [n=2, 3, or 4]
+**Total participants**: [n=2]
 
 ---
 
@@ -125,7 +151,7 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 
 ### Fix 1: [Fix Name]
 
-**Addresses finding**: [Finding #X from table above]
+**Addresses finding**: [Finding #2 from table above]
 
 **Before** ([file path:line number]):
 ```kotlin
@@ -139,7 +165,7 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 [Paste your improved code here]
 ```
 
-**What changed**: [1 sentence - what you added/removed/modified]
+**What changed**: I added a confirmation which appears below the search bar whenever something is deleted.
 
 **Why**: [1 sentence - which WCAG criterion or usability issue this fixes]
 
