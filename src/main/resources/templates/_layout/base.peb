@@ -54,6 +54,12 @@
     button {
       color: white !important; /* White text on blue background for better contrast */
     }
+
+    /* Make button focus better contrasted with button */
+    button:focus {
+      outline: 3px solid light-dark(#000000,#ffffff);
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>

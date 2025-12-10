@@ -87,16 +87,16 @@ P2 consented 09/12/2025 16:45
 
 | Finding | Data Source | Observation (Quote/Timestamp) | WCAG | Impact (1-5) | Inclusion (1-5) | Effort (1-5) | Priority |
 |---------|-------------|------------------------------|------|--------------|-----------------|--------------|----------|
-| Keyboard navigation confusing | metrics.csv + P2 notes| P2: "It's hard to tell which button I'm selecting" | WCAG 2.4.7 | 2 | 3 | 2 | 4 |
-| No confirmation when adding task | P2 notes | (Opon being asked if they saw confirmation) P1: "No, I did not see any confirmation" | WCAG 3.2.2 | 2 | 3 | 1 | 5 |
-| No explicit confirmation when removing task | P2 notes | P2: "I saw that it was removed, but nothing else." | WCAG 3.2.2 | 2 | 3 | 1 | 5 |
-| P2 exceeded expected times significantly | P2 notes, metrics.csv | Task 2 - expected <10 seconds, took 18, Task 3 - expected <10 seconds, took 18 | WCAG 3.2.2 | 2 | 3 | 1 | 5 |
+| Keyboard navigation confusing | metrics.csv + P2 notes| P2: "It's hard to tell which button I'm selecting" | WCAG 2.4.7 | 2 | 4 | 1 | 5 |
+| No confirmation when adding task | P2 notes | (Opon being asked if they saw confirmation) P1: "No, I did not see any confirmation" | WCAG 3.2.2 | 2 | 3 | 1 | 4 |
+| Didn't seen confirmation when removing task | P2 notes | P2: "I saw that it was removed, but nothing else." | WCAG 3.2.2 | 2 | 3 | 1 | 4 |
+| P2 exceeded expected times significantly | P2 notes, metrics.csv | Task 2 - expected <10 seconds, took 18, Task 3 - expected <10 seconds, took 18 | WCAG 3.2.2 | 2 | 5 | 4 | 3 |
 
 **Priority formula**: (Impact + Inclusion) - Effort
 
 **Top 3 priorities for redesign**:
-1. [Finding #3 - Priority score 5]
-2. [Finding #2 - Priority score 5]
+1. [Finding #1 - Priority score 5]
+2. [Finding #2 - Priority score 4]
 3. [Finding #1 - Priority score 4]
 
 ---
@@ -153,23 +153,71 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 
 **Addresses finding**: [Finding #2 from table above]
 
-**Before** ([file path:line number]):
-```kotlin
-// ❌ Problem code
-[Paste your original code here]
+**Before** ([src\main\resources\templates\_layout\base.peb:14]):
+```css
+<style>
+    /* Visually hidden but accessible to screen readers (WCAG 1.3.1) */
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+    }
+    
+    /* Skip link for keyboard navigation (WCAG 2.4.1) */
+    .skip-link {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      background: #1976d2;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 9999;
+    }
+    
+    /* Pagination styles */
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    /* Override Pico.css button color for WCAG 1.4.3 AA compliance */
+    button[type="submit"],
+    button {
+      color: white !important; /* White text on blue background for better contrast */
+    }
+  </style>
 ```
 
-**After** ([file path:line number]):
-```kotlin
-// ✅ Fixed code
-[Paste your improved code here]
+**After** ([src\main\resources\templates\_layout\base.peb:58]):
+```css
+    /* AMENDED CODE ------------- */
+    /* Make button focus better contrasted with button */
+    button:focus {
+      outline: 3px solid light-dark(#000000,#ffffff);
+      outline-offset: 2px;
+    }
+    /*---------------------------- */
+  </style>
 ```
 
-**What changed**: I added a confirmation which appears below the search bar whenever something is deleted.
+**What changed**: I added css to base.peb so that when selecting the button the focus highlight is better contrasted with the button, both in light and dark mode.
 
-**Why**: [1 sentence - which WCAG criterion or usability issue this fixes]
+**Why**: This fixed WCAG 2.4.7 - Focus Visible, as although the original highlighting colour was well contrasted against text fields and the page background, it wasn't well contrasted against the buttons themselves.
 
-**Impact**: [1-2 sentences - how this improves UX, who benefits]
+**Impact**: This improves the user experience as it is now more clear what is being selected when using keyboard navigation, as it was flagged by peer pilot P2, who was using keyboard navigation. In general, this makes the website more accessible to anyone using keyboard navigation, expecially those who are partially sighted and therefore may struggle to differentiate between colours, whilst also relying on keyboard navigation. When re-testing with a peer pilot using keyboard navigation, this should decrease the time taken to perform tasks requiring keyboard navigation over buttons.
 
 ---
 
@@ -208,31 +256,31 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 | Check | Criterion | Level | Result | Notes |
 |-------|-----------|-------|--------|-------|
 | **Keyboard (5)** | | | | |
-| K1 | 2.1.1 All actions keyboard accessible | A | [pass/fail] | [e.g., "Tested Tab/Enter on all buttons"] |
-| K2 | 2.4.7 Focus visible | AA | [pass/fail] | [e.g., "2px blue outline on all interactive elements"] |
-| K3 | No keyboard traps | A | [pass/fail] | [e.g., "Can Tab through filter, edit, delete without traps"] |
-| K4 | Logical tab order | A | [pass/fail] | [e.g., "Top to bottom, left to right"] |
-| K5 | Skip links present | AA | [pass/fail/n/a] | [e.g., "Skip to main content works"] |
+| K1 | 2.1.1 All actions keyboard accessible | A | [pass] | All buttons and fields accessible by tab and usable by keyboard |
+| K2 | 2.4.7 Focus visible | AA | [fail] | 2px border on active elements, similar colour to buttons |
+| K3 | No keyboard traps | A | [pass] | Can go through entire page and fill in text boxes (i.e. filter and add) without any trap |
+| K4 | Logical tab order | A | [pass] | Pressing tab takes the focus from the top to the bottom |
+| K5 | Skip links present | AA | [pass] | Skip to main content perfectly functional |
 | **Forms (3)** | | | | |
-| F1 | 3.3.2 Labels present | A | [pass/fail] | [e.g., "All inputs have <label> or aria-label"] |
-| F2 | 3.3.1 Errors identified | A | [pass/fail] | [e.g., "Errors have role=alert (FIXED in Fix #1)"] |
-| F3 | 4.1.2 Name/role/value | A | [pass/fail] | [e.g., "All form controls have accessible names"] |
+| F1 | 3.3.2 Labels present | A | [pass] | All input fields have a label which is read by screenreader |
+| F2 | 3.3.1 Errors identified | A | [pass/fail] | All errors have attribute role=alert, added in routing code whenever an error is handled |
+| F3 | 4.1.2 Name/role/value | A | [pass] | [e.g., "All form controls have accessible names"] |
 | **Dynamic (3)** | | | | |
-| D1 | 4.1.3 Status messages | AA | [pass/fail] | [e.g., "Status div has role=status"] |
-| D2 | Live regions work | AA | [pass/fail] | [e.g., "Tested with NVDA, announces 'Task added'"] |
-| D3 | Focus management | A | [pass/fail] | [e.g., "Focus moves to error summary after submit"] |
+| D1 | 4.1.3 Status messages | AA | [pass] | [e.g., "Status div has role=status"] |
+| D2 | Live regions work | AA | [fail] | NVDA does not mention "task added" |
+| D3 | Focus management | A | [fail] | Focus does not move after submitting |
 | **No-JS (3)** | | | | |
-| N1 | Full feature parity | — | [pass/fail] | [e.g., "All CRUD ops work without JS"] |
-| N2 | POST-Redirect-GET | — | [pass/fail] | [e.g., "No double-submit on refresh"] |
-| N3 | Errors visible | A | [pass/fail] | [e.g., "Error summary shown in no-JS mode"] |
+| N1 | Full feature parity | — | [pass] | All CRUD operations work without JS enabled |
+| N2 | POST-Redirect-GET | — | [pass] | Refreshing doesn't resend any data |
+| N3 | Errors visible | A | [pass] | Errors still shown without JS enabled |
 | **Visual (3)** | | | | |
-| V1 | 1.4.3 Contrast minimum | AA | [pass/fail] | [e.g., "All text 7.1:1 (AAA) via CCA"] |
-| V2 | 1.4.4 Resize text | AA | [pass/fail] | [e.g., "200% zoom, no content loss"] |
-| V3 | 1.4.11 Non-text contrast | AA | [pass/fail] | [e.g., "Focus indicator 4.5:1"] |
+| V1 | 1.4.3 Contrast minimum | AA | [pass] | Text is 16:1 against buttons and 13:1 against background, and 5:1 between default text and text field backgrounds (e.g. "Type to filter..." against filter textbox) which is just above the 4:1 requirement for smaller text |
+| V2 | 1.4.4 Resize text | AA | [pass] | Everything remains clear even at maximum () |
+| V3 | 1.4.11 Non-text contrast | AA | [pass] | [e.g., "Focus indicator 4.5:1"] Focus indicator 5.2:1 against button and (after fix #1) and 17:1 against background so easily distinguishable against both |
 | **Semantic (3)** | | | | |
-| S1 | 1.3.1 Headings hierarchy | A | [pass/fail] | [e.g., "h1 → h2 → h3, no skips"] |
-| S2 | 2.4.1 Bypass blocks | A | [pass/fail] | [e.g., "<main> landmark, <nav> for filter"] |
-| S3 | 1.1.1 Alt text | A | [pass/fail] | [e.g., "No images in interface OR all have alt"] |
+| S1 | 1.3.1 Headings hierarchy | A | [pass] | Headings all clearly declared programmatically, lower heading always follows a higher heading |
+| S2 | 2.4.1 Bypass blocks | A | [pass] | "Skip to main content" option available at top of page |
+| S3 | 1.1.1 Alt text | A | [pass] | No images present on page |
 
 **Summary**: [X/20 pass], [Y/20 fail]
 **Critical failures** (if any): [List any Level A fails]
@@ -267,15 +315,15 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 
 | Filename | What it shows | Context/Link to finding |
 |----------|---------------|-------------------------|
-| before-sr-error.png | Error message without role="alert" | Finding #1 - SR errors not announced |
-| after-sr-error.png | Error message WITH role="alert" added | Fix #1 verification |
+| button-contrast-before.png | Highlighting around button not well contrasted against button itself | Finding #1 - Low contrast when selecting buttons |
+| button-contrast-after.png | Button selected with better contrast | Fix #1 |
 | regression-axe-report.png | axe DevTools showing 0 violations | Verification Part A |
 | [your-screenshot-3.png] | [Description] | [Which finding/fix this supports] |
 
 **PII check**:
 - [ ] All screenshots cropped to show only relevant UI
 - [ ] Browser bookmarks/tabs not visible
-- [ ] Participant names/emails blurred or not visible
+- [X] Participant names/emails blurred or not visible
 
 ---
 
@@ -283,11 +331,11 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 
 **Instructions**: Attach pilot notes as separate files (P1-notes.md, P2-notes.md, etc.). Summarize key observations here.
 
-**P1** ([ Variant - e.g., "Standard mouse + HTMX"]):
-- **Key observation 1**: [Quote + timestamp - e.g., "Struggled with filter button (09:47)"]
+**P1** ([ Variant - Standard mouse+keyboard + HTMX]):
+- **Key observation 1**: [Quote + timestamp - e.g., "Struggled with filter button (09:47)"] Didn't notice any explicit confirmation when deleting task () - "I can't see any confirmation but I can see it's no longer in the list"
 - **Key observation 2**: [Quote + timestamp]
 
-**P2** ([Variant]):
+**P2** ([Variant - Keyboard navigation + HTMX]):
 - **Key observation 1**: [Quote + timestamp]
 - **Key observation 2**: [Quote + timestamp]
 
@@ -322,13 +370,13 @@ Before submitting, verify:
 
 **Files**:
 - [ ] This completed template (submission-template.md)
-- [ ] metrics.csv (or pasted into Section 3)
-- [ ] Pilot notes (P1-notes.md, P2-notes.md, etc. OR summarised in Section 6)
+- [X] metrics.csv (or pasted into Section 3)
+- [-] Pilot notes (P1-notes.md, P2-notes.md, etc. OR summarised in Section 6)
 - [ ] Screenshots folder (all images referenced above)
 - [ ] Privacy statement signed (top of document)
 
 **Evidence chains**:
-- [ ] findings-table.csv links to metrics.csv lines AND/OR pilot notes timestamps
+- [X] findings-table.csv links to metrics.csv lines AND/OR pilot notes timestamps
 - [ ] implementation-diffs.md references findings from table
 - [ ] verification.csv Part B shows before/after for fixes
 
@@ -339,7 +387,7 @@ Before submitting, verify:
 - [ ] WCAG criteria cited specifically (e.g., "3.3.1" not just "accessibility")
 
 **Pass criteria met**:
-- [ ] n=2+ participants (metrics.csv has 2+ session IDs)
+- [X] n=2+ participants (metrics.csv has 2+ session IDs)
 - [ ] 3+ findings with evidence (findings-table.csv complete)
 - [ ] 1-3 fixes implemented (implementation-diffs.md shows code)
 - [ ] Regression complete (verification.csv has 20 checks)
