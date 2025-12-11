@@ -10,22 +10,22 @@ no success confirmation noticed
 TASK 2
 ----
 8 seconds
-confidence 5
-form found immediately
-no issues
-saw that it changed - success seen
+Confidence 5
+Form found immediately
+No issues
+Saw that it changed - success seen
 
 TASK 3
 ----
 12 seconds
-confidence 5
-took a second to find form
-no major issues
-saw it changed - success seen
+Confidence 5
+Took a second to find form
+No major issues
+Saw it changed - success seen, "I didn't see any confirmation but I see it's no longer in the list"
 searched for dog instead of walk the dog for efficiency
 
 TASK 4
 ----
 8 seconds
 no issues whatsoever
-confidence 4 - "maybe the code is really bad"
+confidence 5 - "maybe the code is really bad"

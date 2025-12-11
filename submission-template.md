@@ -69,10 +69,10 @@
 "Thank you for participating in my HCI evaluation. This will take about 15 minutes. I'm testing my task management interface, not you. There are no right or wrong answers."
 
 **Rights**:
-- [ ] "Your participation is voluntary. You can stop at any time without giving a reason."
-- [ ] "Your data will be anonymous. I'll use a code (like P1) instead of your name."
-- [ ] "I may take screenshots and notes. I'll remove any identifying information."
-- [ ] "Do you consent to participate?" [Wait for verbal yes]
+- [X] "Your participation is voluntary. You can stop at any time without giving a reason."
+- [X] "Your data will be anonymous. I'll use a code (like P1) instead of your name."
+- [X] "I may take screenshots and notes. I'll remove any identifying information."
+- [X] "Do you consent to participate?" [Wait for verbal yes]
 
 **Recorded consent timestamp**:
 
@@ -257,16 +257,16 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 |-------|-----------|-------|--------|-------|
 | **Keyboard (5)** | | | | |
 | K1 | 2.1.1 All actions keyboard accessible | A | [pass] | All buttons and fields accessible by tab and usable by keyboard |
-| K2 | 2.4.7 Focus visible | AA | [fail] | 2px border on active elements, similar colour to buttons |
+| K2 | 2.4.7 Focus visible | AA | [pass] | 2px border on active elements, was originally similar colour to buttons but changed in fix #1|
 | K3 | No keyboard traps | A | [pass] | Can go through entire page and fill in text boxes (i.e. filter and add) without any trap |
 | K4 | Logical tab order | A | [pass] | Pressing tab takes the focus from the top to the bottom |
 | K5 | Skip links present | AA | [pass] | Skip to main content perfectly functional |
 | **Forms (3)** | | | | |
 | F1 | 3.3.2 Labels present | A | [pass] | All input fields have a label which is read by screenreader |
-| F2 | 3.3.1 Errors identified | A | [pass/fail] | All errors have attribute role=alert, added in routing code whenever an error is handled |
-| F3 | 4.1.2 Name/role/value | A | [pass] | [e.g., "All form controls have accessible names"] |
+| F2 | 3.3.1 Errors identified | A | [pass] | All errors have attribute role=alert, added in routing code whenever an error is handled |
+| F3 | 4.1.2 Name/role/value | A | [pass] | All components on the page have accessible, understandable names |
 | **Dynamic (3)** | | | | |
-| D1 | 4.1.3 Status messages | AA | [pass] | [e.g., "Status div has role=status"] |
+| D1 | 4.1.3 Status messages | AA | [pass] | Status div has attribute role="status" |
 | D2 | Live regions work | AA | [fail] | NVDA does not mention "task added" |
 | D3 | Focus management | A | [fail] | Focus does not move after submitting |
 | **No-JS (3)** | | | | |
@@ -275,14 +275,14 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 | N3 | Errors visible | A | [pass] | Errors still shown without JS enabled |
 | **Visual (3)** | | | | |
 | V1 | 1.4.3 Contrast minimum | AA | [pass] | Text is 16:1 against buttons and 13:1 against background, and 5:1 between default text and text field backgrounds (e.g. "Type to filter..." against filter textbox) which is just above the 4:1 requirement for smaller text |
-| V2 | 1.4.4 Resize text | AA | [pass] | Everything remains clear even at maximum () |
+| V2 | 1.4.4 Resize text | AA | [pass] | Everything remains clear even at maximum (200%) |
 | V3 | 1.4.11 Non-text contrast | AA | [pass] | [e.g., "Focus indicator 4.5:1"] Focus indicator 5.2:1 against button and (after fix #1) and 17:1 against background so easily distinguishable against both |
 | **Semantic (3)** | | | | |
 | S1 | 1.3.1 Headings hierarchy | A | [pass] | Headings all clearly declared programmatically, lower heading always follows a higher heading |
 | S2 | 2.4.1 Bypass blocks | A | [pass] | "Skip to main content" option available at top of page |
 | S3 | 1.1.1 Alt text | A | [pass] | No images present on page |
 
-**Summary**: [X/20 pass], [Y/20 fail]
+**Summary**: [18/20 pass], [2/20 fail]
 **Critical failures** (if any): [List any Level A fails]
 
 ---
@@ -293,17 +293,15 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 
 | Metric | Before (Week 9, n=X) | After (Week 10, n=Y) | Change | Target Met? |
 |--------|----------------------|----------------------|--------|-------------|
-| SR error detection | [e.g., 0/2 (0%)] | [e.g., 2/2 (100%)] | [e.g., +100%] | [✅/❌] |
-| Validation error rate | [e.g., 33%] | [e.g., 0%] | [e.g., -33%] | [✅/❌] |
-| Median time [Task X] | [e.g., 1400ms] | [e.g., 1150ms] | [e.g., -250ms] | [✅/❌] |
-| WCAG [criterion] pass | [fail] | [pass] | [— ] | [✅/❌] |
+| Task 3 (remove task) with keyboard navigation | 18 seconds | 8 seconds | [e.g., -10ms] | [✅] |
+| Task 4 (go through and count tasks) with keyboard navigation | 17 seconds | 6 seconds | [e.g., -12 seconds] | [✅] |
+| WCAG [2.4.1] | [fail] | [pass] | Contrast of border showing focus against buttons and background improved  | [✅] |
 
 **Re-pilot details**:
-- **P5** (post-fix): [Variant - e.g., "Screen reader user, NVDA + keyboard"] - [Date piloted]
-- **P6** (if applicable): [Variant] - [Date]
+- **P3** (post-fix): [Variant - Keyboard navigation + HTMX] - [Date 11/12/2025]
 
 **Limitations / Honest reporting**:
-[If metrics didn't improve or only modestly: explain why. Small sample size? Wrong fix? Needs more iteration? Be honest - valued over perfect results.]
+Metrics improved overall between P2 and P3, who both used keyboard navigation. Task 1 did not see major improvement, which makes sense as little navigation is required to find the text box to add tasks. Task 2 also saw less improvement - this may be due to an overall overhead from finding the task to edit and typing the amendment. Tasks 3 and 4 however faced a great improvement, suggesting that the increased visibility of the focus of keyboard navigation has aided user experience.
 
 ---
 
@@ -321,8 +319,8 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 | [your-screenshot-3.png] | [Description] | [Which finding/fix this supports] |
 
 **PII check**:
-- [ ] All screenshots cropped to show only relevant UI
-- [ ] Browser bookmarks/tabs not visible
+- [X] All screenshots cropped to show only relevant UI
+- [X] Browser bookmarks/tabs not visible
 - [X] Participant names/emails blurred or not visible
 
 ---
@@ -332,33 +330,30 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 **Instructions**: Attach pilot notes as separate files (P1-notes.md, P2-notes.md, etc.). Summarize key observations here.
 
 **P1** ([ Variant - Standard mouse+keyboard + HTMX]):
-- **Key observation 1**: [Quote + timestamp - e.g., "Struggled with filter button (09:47)"] Didn't notice any explicit confirmation when deleting task () - "I can't see any confirmation but I can see it's no longer in the list"
+- **Key observation 1**: Didn't notice any explicit confirmation when deleting task (16:41:31) - "I didn't see any confirmation but I see it's no longer in the list"
 - **Key observation 2**: [Quote + timestamp]
 
 **P2** ([Variant - Keyboard navigation + HTMX]):
-- **Key observation 1**: [Quote + timestamp]
-- **Key observation 2**: [Quote + timestamp]
-
-[Repeat for P3, P4 if applicable]
-
+- **Key observation 1**: Exceeded expected times by a large margin (e.g., task 3 took 18 seconds, greater than the target 10)
+- **Key observation 2**: Comments made on the difficulty to see which buttons are selected - "It's hard to see which task I'm on"
 ---
 
 ## Evidence Chain Example (Full Trace)
 
 **Instructions**: Pick ONE finding and show complete evidence trail from data → fix → verification.
 
-**Finding selected**: [e.g., "Finding #1 - SR errors not announced"]
+**Finding selected**: Finding #1 - Contrast of focus border lacking against buttons
 
 **Evidence trail**:
-1. **Data**: metrics.csv lines 47-49 show P2 (SR user) triggered validation_error 3 times
-2. **Observation**: P2 pilot notes timestamp 14:23 - Quote: "I don't know if it worked, didn't hear anything"
-3. **Screenshot**: before-sr-error.png shows error message has no role="alert" or aria-live
-4. **WCAG**: 3.3.1 Error Identification (Level A) violation - errors not programmatically announced
-5. **Prioritisation**: findings-table.csv row 1 - Priority score 7 (Impact 5 + Inclusion 5 - Effort 3)
-6. **Fix**: implementation-diffs.md Fix #1 - Added role="alert" + aria-live="assertive" to error span
-7. **Verification**: verification.csv Part A row F2 - 3.3.1 now PASS (tested with NVDA)
-8. **Before/after**: verification.csv Part B - SR error detection improved from 0% to 100%
-9. **Re-pilot**: P5 (SR user) pilot notes - "Heard error announcement immediately, corrected and succeeded"
+1. **Data**: metrics.csv lines with P2 in session ID show large time difference between actions, P2 notes also show a long time taken using keyboard navigation.
+2. **Observation**: P2 pilot notes timestamp 14:23 - Quote: "It's hard to see which task I'm on"
+3. **Screenshot**: button-contrast-before.png shows button being selected with poorly contrasted outline.
+4. **WCAG**: Violation of 2.4.7 - Focus visible
+5. **Prioritisation**: Findings table entry 1
+6. **Fix**: Added line of CSS for specifically when highlighting buttons - the contrast with the original colour against the background and text fields was sufficient.
+7. **Verification**: TO DOOOOOOOOOOOO verification.csv Part A row F2 - 3.3.1 now PASS (tested with NVDA)
+8. **Before/after**: TO DOOOOOOOOOOO verification.csv Part B - SR error detection improved from 0% to 100%
+9. **Re-pilot**: P3 (second keyboard navigation user) found it much easier to go through the tasks using only keyboard and completed all tasks quicker (with some great improvements on P2).
 
 **Complete chain**: Data → Observation → Interpretation → Fix → Verification ✅
 
@@ -371,7 +366,7 @@ Before submitting, verify:
 **Files**:
 - [ ] This completed template (submission-template.md)
 - [X] metrics.csv (or pasted into Section 3)
-- [-] Pilot notes (P1-notes.md, P2-notes.md, etc. OR summarised in Section 6)
+- [X] Pilot notes (P1-notes.md, P2-notes.md, etc. OR summarised in Section 6)
 - [ ] Screenshots folder (all images referenced above)
 - [ ] Privacy statement signed (top of document)
 
@@ -383,14 +378,14 @@ Before submitting, verify:
 **Quality**:
 - [ ] No PII in screenshots (checked twice!)
 - [ ] Session IDs anonymous (P1_xxxx format, not real names)
-- [ ] Honest reporting (limitations acknowledged if metrics didn't improve)
-- [ ] WCAG criteria cited specifically (e.g., "3.3.1" not just "accessibility")
+- [X] Honest reporting (limitations acknowledged if metrics didn't improve)
+- [X] WCAG criteria cited specifically (e.g., "3.3.1" not just "accessibility")
 
 **Pass criteria met**:
 - [X] n=2+ participants (metrics.csv has 2+ session IDs)
 - [ ] 3+ findings with evidence (findings-table.csv complete)
-- [ ] 1-3 fixes implemented (implementation-diffs.md shows code)
-- [ ] Regression complete (verification.csv has 20 checks)
+- [X] 1-3 fixes implemented (implementation-diffs.md shows code)
+- [X] Regression complete (verification.csv has 20 checks)
 - [ ] Before/after shown (verification.csv Part B has data)
 
 ---
